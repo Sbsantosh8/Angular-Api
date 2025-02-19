@@ -1,59 +1,83 @@
-# ApiLearning
+# Angular 19 - Setting Up HTTP Client
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 19.1.7.
+This guide provides step-by-step instructions on setting up and using `HttpClient` in an Angular 19 project without `app.module.ts`.
 
-## Development server
+## Steps to Setup `HttpClient`
 
-To start a local development server, run:
+### Step 1: Generate a Service
+Run the following command to generate a new service inside the `services` folder:
+```sh
+ng g s services/userData
+```
 
-```bash
+### Step 2: Import `HttpClient`
+Inside `user-data.service.ts`, import `HttpClient` and inject it into the constructor:
+```typescript
+import { Injectable } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+
+@Injectable({
+  providedIn: 'root',
+})
+export class UserDataService {
+  constructor(private http: HttpClient) {}
+  
+  getUserData() {
+    return this.http.get('https://api.example.com/users');
+  }
+}
+```
+
+### Step 3: Provide `HttpClient` Globally
+In **Angular 19**, instead of `app.module.ts`, we use `app.config.ts`. Open `app.config.ts` and add `provideHttpClient()`:
+
+```typescript
+import { ApplicationConfig } from '@angular/core';
+import { provideHttpClient } from '@angular/common/http';
+import { provideRouter } from '@angular/router';
+import { routes } from './app.routes';
+
+export const appConfig: ApplicationConfig = {
+  providers: [
+    provideRouter(routes),
+    provideHttpClient()
+  ]
+};
+```
+
+### Step 4: Use the Service in a Component
+Import and use `UserDataService` in your component:
+```typescript
+import { Component, OnInit } from '@angular/core';
+import { UserDataService } from '../services/user-data.service';
+
+@Component({
+  selector: 'app-user',
+  templateUrl: './user.component.html',
+  styleUrls: ['./user.component.css']
+})
+export class UserComponent implements OnInit {
+  users: any;
+  
+  constructor(private userDataService: UserDataService) {}
+  
+  ngOnInit() {
+    this.userDataService.getUserData().subscribe(data => {
+      this.users = data;
+    });
+  }
+}
+```
+
+### Step 5: Run the Project
+Start the Angular application using:
+```sh
 ng serve
 ```
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
+## Conclusion
+This guide walks through the setup of `HttpClient` in an **Angular 19** project using **app.config.ts**. Following these steps, you can make API requests effectively without using `app.module.ts`.
 
-## Code scaffolding
+---
 
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
-
-```bash
-ng generate component component-name
-```
-
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
-
-```bash
-ng generate --help
-```
-
-## Building
-
-To build the project run:
-
-```bash
-ng build
-```
-
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
-
-## Running unit tests
-
-To execute unit tests with the [Karma](https://karma-runner.github.io) test runner, use the following command:
-
-```bash
-ng test
-```
-
-## Running end-to-end tests
-
-For end-to-end (e2e) testing, run:
-
-```bash
-ng e2e
-```
-
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
-
-## Additional Resources
-
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+✅ Happy Coding! 🚀
