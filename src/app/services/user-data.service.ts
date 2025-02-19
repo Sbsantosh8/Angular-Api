@@ -28,4 +28,9 @@ export class UserDataService {
   getUserData() {
     return this.http.get(`${this.apiUrl}`);
   }
+
+saveUserData(data:any){
+  console.log("Inside saveUserData",data);
+  return this.http.post(`${this.apiUrl}`,data);
+}
 }

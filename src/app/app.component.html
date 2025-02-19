@@ -1,10 +1,19 @@
 <h1>App Component</h1>
 
-<ul>
+<!-- <ul>
   <li *ngFor="let user of users">
     {{ user.username }}
   </li>
-</ul>
+</ul> -->
+
+<!-- <app-footer></app-footer> -->
+
+<form #usersForm="ngForm" (ngSubmit)="getUserFormData(usersForm.value)">
 
 
-<app-footer></app-footer>
+<input type="text" ngModel name="username" placeholder="Enter Username">
+<br><br>
+<input type="text" ngModel name="email" placeholder="Enter Email">
+<br><br>
+<button>Add New User</button>
+</form>
