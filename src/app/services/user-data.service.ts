@@ -21,11 +21,11 @@ import { Observable } from 'rxjs';
   providedIn: 'root' // Ensures global availability
 })
 export class UserDataService {
-  private apiUrl = 'https://jsonplaceholder.typicode.com/todos/1'; // Replace with your API
+  private apiUrl = 'https://jsonplaceholder.typicode.com/users'; // Replace with your API
 
   constructor(private http: HttpClient) {} // Ensure HttpClient is injected
 
-  user(): Observable<any> {
-    return this.http.get(`${this.apiUrl}/users`);
+  getUserData() {
+    return this.http.get(`${this.apiUrl}`);
   }
 }
