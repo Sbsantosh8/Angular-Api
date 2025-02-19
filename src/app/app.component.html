@@ -1,13 +1,9 @@
 <h1>App Component</h1>
 
-<!-- <ul>
-  <li *ngFor="let user of users">
-    {{ user.username }}
-  </li>
-</ul> -->
+
 
 <!-- <app-footer></app-footer> -->
-
+<input type="text" [(ngModel)]="username" placeholder="Enter Username">
 <form #usersForm="ngForm" (ngSubmit)="getUserFormData(usersForm.value)">
 
 
@@ -17,3 +13,9 @@
 <br><br>
 <button>Add New User</button>
 </form>
+
+<ul>
+  <li *ngFor="let user of users">
+    {{ user.username }}
+  </li>
+</ul>

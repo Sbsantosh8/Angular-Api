@@ -23,6 +23,7 @@ import { Observable } from 'rxjs';
 export class UserDataService {
   private apiUrl = 'https://jsonplaceholder.typicode.com/users'; // Replace with your API
 
+
   constructor(private http: HttpClient) {} // Ensure HttpClient is injected
 
   getUserData() {
